@@ -137,8 +137,13 @@
     border-color: var(--color-border);
   }
 
+  html {
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
   }
 }

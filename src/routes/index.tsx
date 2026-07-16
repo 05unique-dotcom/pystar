@@ -1,246 +1,164 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { Nav } from "@/components/nav";
+import { LESSONS, BADGES } from "@/lib/lessons-data";
+import { tickStreak, useProgress } from "@/lib/progress-store";
+import { Flame, Trophy, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GitHub Repo Importer — Python Learner" },
+      { title: "PyLearn — Python Learning, Playful & Fast" },
       {
         name: "description",
         content:
-          "Paste a GitHub repository URL to browse and preview its files inside your Lovable project.",
+          "Interactive Python lessons, quizzes, badges, and streaks. Learn Python step-by-step in a colorful mobile-first app.",
       },
+      { property: "og:title", content: "PyLearn — Learn Python the Fun Way" },
+      { property: "og:description", content: "Lessons, quizzes, badges, streaks." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Importer,
+  component: Dashboard,
 });
 
-type TreeEntry = {
-  path: string;
-  type: "blob" | "tree";
-  sha: string;
-  size?: number;
-};
+function Dashboard() {
+  const p = useProgress();
+  useEffect(() => {
+    tickStreak();
+  }, []);
 
-type RepoInfo = {
-  owner: string;
-  repo: string;
-  branch: string;
-};
+  const total = LESSONS.length;
+  const done = p.completedLessons.length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
 
-function parseRepoUrl(input: string): RepoInfo | null {
-  const trimmed = input.trim();
-  if (!trimmed) return null;
-  try {
-    // Accept owner/repo shorthand
-    if (/^[\w.-]+\/[\w.-]+$/.test(trimmed)) {
-      const [owner, repo] = trimmed.split("/");
-      return { owner, repo: repo.replace(/\.git$/, ""), branch: "" };
-    }
-    const url = new URL(trimmed);
-    const parts = url.pathname.replace(/^\/+/, "").split("/");
-    if (parts.length < 2) return null;
-    const [owner, repoRaw, kind, ...rest] = parts;
-    const repo = repoRaw.replace(/\.git$/, "");
-    let branch = "";
-    if ((kind === "tree" || kind === "blob") && rest[0]) branch = rest[0];
-    return { owner, repo, branch };
-  } catch {
-    return null;
-  }
-}
-
-async function ghJson(url: string) {
-  const res = await fetch(url, {
-    headers: { Accept: "application/vnd.github+json" },
+  const earnedBadges = BADGES.filter((b) => {
+    if (b.type === "quiz") return p.passedQuizzes.length >= b.need;
+    if (b.type === "streak") return p.streak >= b.need;
+    return p.completedLessons.length >= b.need;
   });
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`GitHub ${res.status}: ${body.slice(0, 200)}`);
-  }
-  return res.json();
-}
-
-function Importer() {
-  const [url, setUrl] = useState(
-    "https://github.com/05unique-dotcom/python-learner-app",
-  );
-  const [info, setInfo] = useState<RepoInfo | null>(null);
-  const [tree, setTree] = useState<TreeEntry[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
-  const [fileContent, setFileContent] = useState<string>("");
-  const [fileLoading, setFileLoading] = useState(false);
-  const [filter, setFilter] = useState("");
-
-  async function handleImport() {
-    setError(null);
-    setTree([]);
-    setSelected(null);
-    setFileContent("");
-    const parsed = parseRepoUrl(url);
-    if (!parsed) {
-      setError("Enter a valid GitHub URL or owner/repo");
-      return;
-    }
-    setLoading(true);
-    try {
-      let branch = parsed.branch;
-      if (!branch) {
-        const repoMeta = await ghJson(
-          `https://api.github.com/repos/${parsed.owner}/${parsed.repo}`,
-        );
-        branch = repoMeta.default_branch;
-      }
-      const treeData = await ghJson(
-        `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/git/trees/${branch}?recursive=1`,
-      );
-      const entries: TreeEntry[] = (treeData.tree ?? []).filter(
-        (e: TreeEntry) => e.type === "blob",
-      );
-      setInfo({ ...parsed, branch });
-      setTree(entries);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load repo");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function loadFile(path: string) {
-    if (!info) return;
-    setSelected(path);
-    setFileLoading(true);
-    setFileContent("");
-    try {
-      const raw = await fetch(
-        `https://raw.githubusercontent.com/${info.owner}/${info.repo}/${info.branch}/${path}`,
-      );
-      if (!raw.ok) throw new Error(`Failed to fetch file (${raw.status})`);
-      const text = await raw.text();
-      setFileContent(text.slice(0, 200_000));
-    } catch (e) {
-      setFileContent(e instanceof Error ? e.message : "Failed to load file");
-    } finally {
-      setFileLoading(false);
-    }
-  }
-
-  const filteredTree = filter
-    ? tree.filter((e) => e.path.toLowerCase().includes(filter.toLowerCase()))
-    : tree;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <header className="mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-indigo-700 shadow-sm ring-1 ring-indigo-100 dark:bg-slate-800/70 dark:text-indigo-300 dark:ring-slate-700">
-            <span>🐍</span> Placeholder integration
-          </div>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">
-            GitHub Repo Importer
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-400">
-            Paste a public GitHub repo URL to browse its file tree and preview
-            source code. Once you find files worth carrying over, copy them into
-            this project and I'll wire them into your Python Learner app.
-          </p>
-        </header>
+    <div className="min-h-screen bg-background text-foreground">
+      <Nav />
+      <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
+        {/* Hero */}
+        <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-fuchsia-500/10 via-purple-500/10 to-cyan-500/10 p-5 sm:p-8">
+          <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-fuchsia-500/20 blur-3xl" />
+          <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
+          <div className="relative">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium backdrop-blur">
+              <Sparkles className="h-3 w-3 text-fuchsia-500" /> Playful Python
+            </div>
+            <h1 className="mt-3 text-2xl font-black tracking-tight sm:text-4xl">
+              Namaste, coder! <span className="bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">Let's learn Python.</span>
+            </h1>
+            <p className="mt-2 max-w-lg text-sm text-muted-foreground sm:text-base">
+              Chhote-chhote lessons, mazedaar quizzes, aur roz ka streak — sab ek hi jagah.
+            </p>
 
-        <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
-          <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
-            Repository URL or owner/repo
-          </label>
-          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-            <input
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://github.com/owner/repo"
-              className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-            />
-            <button
-              onClick={handleImport}
-              disabled={loading}
-              className="rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-95 disabled:opacity-60"
-            >
-              {loading ? "Importing…" : "Import"}
-            </button>
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Stat icon="🔥" label="Day streak" value={p.hydrated ? p.streak : 0} tint="from-orange-500 to-rose-500" />
+              <Stat icon="⭐" label="Points" value={p.hydrated ? p.points : 0} tint="from-yellow-500 to-amber-500" />
+              <Stat icon="📘" label="Lessons" value={`${done}/${total}`} tint="from-indigo-500 to-purple-500" />
+              <Stat icon="🏆" label="Badges" value={p.hydrated ? earnedBadges.length : 0} tint="from-emerald-500 to-teal-500" />
+            </div>
+
+            <div className="mt-5">
+              <div className="mb-1.5 flex items-center justify-between text-xs font-medium text-muted-foreground">
+                <span>Overall progress</span>
+                <span>{pct}%</span>
+              </div>
+              <div className="h-2.5 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 transition-all duration-700"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
           </div>
-          {error && (
-            <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-300">
-              {error}
-            </p>
-          )}
-          {info && !error && (
-            <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-              Loaded <span className="font-mono">{info.owner}/{info.repo}</span>{" "}
-              on branch <span className="font-mono">{info.branch}</span> ·{" "}
-              {tree.length} files
-            </p>
-          )}
         </section>
 
-        {tree.length > 0 && (
-          <section className="mt-6 grid gap-4 lg:grid-cols-[320px_1fr]">
-            <div className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
-              <input
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                placeholder="Filter files…"
-                className="mb-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs outline-none focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-              />
-              <div className="max-h-[520px] overflow-auto">
-                <ul className="space-y-0.5 text-sm">
-                  {filteredTree.map((entry) => (
-                    <li key={entry.path}>
-                      <button
-                        onClick={() => loadFile(entry.path)}
-                        className={`w-full truncate rounded-md px-2 py-1 text-left font-mono text-xs transition ${
-                          selected === entry.path
-                            ? "bg-indigo-100 text-indigo-900 dark:bg-indigo-500/20 dark:text-indigo-200"
-                            : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                        }`}
-                        title={entry.path}
-                      >
-                        {entry.path}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+        {/* Continue */}
+        <section className="mt-8">
+          <div className="mb-3 flex items-end justify-between">
+            <h2 className="text-lg font-bold sm:text-xl">Continue learning</h2>
+            <Link to="/lessons" className="text-xs font-semibold text-fuchsia-500 hover:underline">
+              See all →
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {LESSONS.slice(0, 3).map((l) => {
+              const isDone = p.completedLessons.includes(l.slug);
+              return (
+                <Link
+                  key={l.slug}
+                  to="/lessons/$slug"
+                  params={{ slug: l.slug }}
+                  className="group relative overflow-hidden rounded-2xl border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                  <div className={`mb-3 grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${l.gradient} text-xl shadow-lg`}>
+                    {l.emoji}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">{l.title}</h3>
+                    {isDone && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                  </div>
+                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{l.summary}</p>
+                  <div className="mt-3 flex items-center justify-between text-xs">
+                    <span className="rounded-full bg-accent px-2 py-0.5 font-medium text-muted-foreground">{l.topic}</span>
+                    <ArrowRight className="h-4 w-4 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
 
-            <div className="rounded-2xl bg-slate-950 p-4 shadow-sm ring-1 ring-slate-800">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="truncate font-mono text-xs text-slate-400">
-                  {selected ?? "Select a file to preview"}
-                </span>
-                {selected && (
-                  <button
-                    onClick={() => navigator.clipboard.writeText(fileContent)}
-                    className="rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-200 hover:bg-slate-700"
-                  >
-                    Copy
-                  </button>
-                )}
-              </div>
-              <pre className="max-h-[520px] overflow-auto text-xs leading-relaxed text-slate-200">
-                <code>
-                  {fileLoading
-                    ? "Loading…"
-                    : fileContent || "// File preview will appear here."}
-                </code>
-              </pre>
-            </div>
-          </section>
-        )}
+        {/* Badges */}
+        <section className="mt-8">
+          <div className="mb-3 flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-yellow-500" />
+            <h2 className="text-lg font-bold sm:text-xl">Your badges</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {BADGES.map((b) => {
+              const got = earnedBadges.some((e) => e.id === b.id);
+              return (
+                <div
+                  key={b.id}
+                  className={`rounded-2xl border p-3 text-center transition ${
+                    got
+                      ? "border-transparent bg-gradient-to-br from-yellow-400/20 to-fuchsia-500/20 shadow-inner"
+                      : "border-border bg-card opacity-60"
+                  }`}
+                >
+                  <div className={`mx-auto grid h-12 w-12 place-items-center rounded-full text-2xl ${got ? "" : "grayscale"}`}>
+                    {b.emoji}
+                  </div>
+                  <div className="mt-1 text-sm font-bold">{b.name}</div>
+                  <div className="text-[11px] text-muted-foreground">{b.desc}</div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
-        <p className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
-          Uses GitHub's public REST API. Private repos need an access token —
-          ask me to wire one up when you're ready.
-        </p>
-      </div>
+        <div className="mt-10 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <Flame className="h-3 w-3 text-orange-500" /> Roz thoda-thoda seekho, badhta jayega.
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function Stat({ icon, label, value, tint }: { icon: string; label: string; value: string | number; tint: string }) {
+  return (
+    <div className="rounded-2xl border border-border bg-background/70 p-3 backdrop-blur">
+      <div className={`mb-1 inline-grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br ${tint} text-sm`}>{icon}</div>
+      <div className="text-lg font-black leading-tight sm:text-xl">{value}</div>
+      <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{label}</div>
     </div>
   );
 }

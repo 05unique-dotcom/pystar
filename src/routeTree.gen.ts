@@ -9,38 +9,81 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LessonsRouteImport } from './routes/lessons'
+import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LessonsSlugRouteImport } from './routes/lessons.$slug'
 
+const LessonsRoute = LessonsRouteImport.update({
+  id: '/lessons',
+  path: '/lessons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BadgesRoute = BadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LessonsSlugRoute = LessonsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LessonsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/badges': typeof BadgesRoute
+  '/lessons': typeof LessonsRouteWithChildren
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/badges': typeof BadgesRoute
+  '/lessons': typeof LessonsRouteWithChildren
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/badges': typeof BadgesRoute
+  '/lessons': typeof LessonsRouteWithChildren
+  '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/badges' | '/lessons' | '/lessons/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/badges' | '/lessons' | '/lessons/$slug'
+  id: '__root__' | '/' | '/badges' | '/lessons' | '/lessons/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BadgesRoute: typeof BadgesRoute
+  LessonsRoute: typeof LessonsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/lessons': {
+      id: '/lessons'
+      path: '/lessons'
+      fullPath: '/lessons'
+      preLoaderRoute: typeof LessonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/badges': {
+      id: '/badges'
+      path: '/badges'
+      fullPath: '/badges'
+      preLoaderRoute: typeof BadgesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +91,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lessons/$slug': {
+      id: '/lessons/$slug'
+      path: '/$slug'
+      fullPath: '/lessons/$slug'
+      preLoaderRoute: typeof LessonsSlugRouteImport
+      parentRoute: typeof LessonsRoute
+    }
   }
 }
 
+interface LessonsRouteChildren {
+  LessonsSlugRoute: typeof LessonsSlugRoute
+}
+
+const LessonsRouteChildren: LessonsRouteChildren = {
+  LessonsSlugRoute: LessonsSlugRoute,
+}
+
+const LessonsRouteWithChildren =
+  LessonsRoute._addFileChildren(LessonsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BadgesRoute: BadgesRoute,
+  LessonsRoute: LessonsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
