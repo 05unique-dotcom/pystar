@@ -37,7 +37,8 @@ export const Route = createFileRoute("/lessons/$slug")({
 });
 
 function LessonPage() {
-  const { lesson } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const lesson = LESSONS.find((l) => l.slug === slug)!;
   const p = useProgress();
   const nav = useNavigate();
   const [step, setStep] = useState<"read" | "quiz">("read");
