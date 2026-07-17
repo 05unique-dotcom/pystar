@@ -146,7 +146,7 @@ function Dashboard() {
         </section>
 
         <div className="mt-10 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <Flame className="h-3 w-3 text-orange-500" /> Roz thoda-thoda seekho, badhta jayega.
+          <Flame className="h-3 w-3 text-orange-500" /> A little every day goes a long way.
         </div>
       </main>
     </div>
