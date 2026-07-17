@@ -49,7 +49,7 @@ function LessonPage() {
   const quizDone = p.passedQuizzes.includes(lesson.slug);
 
   const correct = lesson.quiz.filter((q, i) => answers[i] === q.answer).length;
-  const passed = correct === lesson.quiz.length;
+  const passed = correct / lesson.quiz.length >= 0.7;
 
   const finishRead = () => {
     completeLesson(lesson.slug);
@@ -58,7 +58,7 @@ function LessonPage() {
 
   const submitQuiz = () => {
     setSubmitted(true);
-    if (correct === lesson.quiz.length) passQuiz(lesson.slug);
+    if (correct / lesson.quiz.length >= 0.7) passQuiz(lesson.slug);
   };
 
   return (
@@ -162,7 +162,7 @@ function LessonPage() {
                   {correct} / {lesson.quiz.length} correct
                 </p>
                 <p className="text-sm opacity-80">
-                  {passed ? "Shabaash! Quiz pass ho gaya. +30 points." : "Thoda aur try karo, tum kar sakte ho."}
+                  {passed ? "Well done! You passed the quiz. +30 points." : "Almost there — give it another try!"}
                 </p>
                 <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
                   <button
