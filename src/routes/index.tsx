@@ -52,10 +52,10 @@ function Dashboard() {
               <Sparkles className="h-3 w-3 text-fuchsia-500" /> Playful Python
             </div>
             <h1 className="mt-3 text-2xl font-black tracking-tight sm:text-4xl">
-              Namaste, coder! <span className="bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">Let's learn Python.</span>
+              Hello, coder! <span className="bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">Let's learn Python.</span>
             </h1>
             <p className="mt-2 max-w-lg text-sm text-muted-foreground sm:text-base">
-              Chhote-chhote lessons, mazedaar quizzes, aur roz ka streak — sab ek hi jagah.
+              Bite-sized lessons, fun quizzes, and a daily streak — all in one place.
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
