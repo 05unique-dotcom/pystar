@@ -19,8 +19,10 @@ const empty: Progress = {
 };
 
 const listeners = new Set<() => void>();
+let cache: Progress = empty;
+let initialized = false;
 
-function read(): Progress {
+function readFromStorage(): Progress {
   if (typeof window === "undefined") return empty;
   try {
     const raw = localStorage.getItem(KEY);
@@ -31,8 +33,29 @@ function read(): Progress {
   }
 }
 
+function ensureInit() {
+  if (initialized || typeof window === "undefined") return;
+  cache = readFromStorage();
+  initialized = true;
+}
+
+function getSnapshot(): Progress {
+  ensureInit();
+  return cache;
+}
+
+function getServerSnapshot(): Progress {
+  return empty;
+}
+
 function write(p: Progress) {
-  localStorage.setItem(KEY, JSON.stringify(p));
+  cache = p;
+  initialized = true;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(p));
+  } catch {
+    // ignore
+  }
   listeners.forEach((l) => l());
 }
 
@@ -45,40 +68,41 @@ export function useProgress() {
       listeners.add(cb);
       return () => listeners.delete(cb);
     },
-    () => read(),
-    () => empty,
+    getSnapshot,
+    getServerSnapshot,
   );
 
   return { ...data, hydrated };
 }
 
 export function completeLesson(slug: string) {
-  const p = read();
+  ensureInit();
+  const p = { ...cache, completedLessons: [...cache.completedLessons] };
   if (!p.completedLessons.includes(slug)) {
     p.completedLessons.push(slug);
-    p.points += 20;
+    p.points = cache.points + 20;
   }
   write(p);
 }
 
 export function passQuiz(slug: string) {
-  const p = read();
+  ensureInit();
+  const p = { ...cache, passedQuizzes: [...cache.passedQuizzes] };
   if (!p.passedQuizzes.includes(slug)) {
     p.passedQuizzes.push(slug);
-    p.points += 30;
+    p.points = cache.points + 30;
   }
   write(p);
 }
 
 export function tickStreak() {
   if (typeof window === "undefined") return;
+  ensureInit();
   const today = new Date().toISOString().slice(0, 10);
-  const p = read();
-  if (p.lastVisit === today) return;
+  if (cache.lastVisit === today) return;
   const y = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  p.streak = p.lastVisit === y ? p.streak + 1 : 1;
-  p.lastVisit = today;
-  write(p);
+  const streak = cache.lastVisit === y ? cache.streak + 1 : 1;
+  write({ ...cache, streak, lastVisit: today });
 }
 
 export function resetProgress() {
