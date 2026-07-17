@@ -58,7 +58,7 @@ function LessonPage() {
 
   const submitQuiz = () => {
     setSubmitted(true);
-    if (correct === lesson.quiz.length) passQuiz(lesson.slug);
+    if (correct / lesson.quiz.length >= 0.7) passQuiz(lesson.slug);
   };
 
   return (
