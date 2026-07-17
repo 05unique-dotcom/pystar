@@ -7,6 +7,8 @@ const items = [
   { to: "/", label: "Dashboard" },
   { to: "/lessons", label: "Lessons" },
   { to: "/badges", label: "Badges" },
+  { to: "/leaderboard", label: "Leaderboard" },
+  { to: "/certificate", label: "Certificate" },
 ];
 
 export function Nav() {

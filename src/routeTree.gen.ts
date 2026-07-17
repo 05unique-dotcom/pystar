@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LessonsRouteImport } from './routes/lessons'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LessonsSlugRouteImport } from './routes/lessons.$slug'
@@ -23,6 +24,11 @@ const LessonsRoute = LessonsRouteImport.update({
 const LeaderboardRoute = LeaderboardRouteImport.update({
   id: '/leaderboard',
   path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CertificateRoute = CertificateRouteImport.update({
+  id: '/certificate',
+  path: '/certificate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BadgesRoute = BadgesRouteImport.update({
@@ -44,6 +50,7 @@ const LessonsSlugRoute = LessonsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/badges': typeof BadgesRoute
+  '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRouteWithChildren
   '/lessons/$slug': typeof LessonsSlugRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/badges': typeof BadgesRoute
+  '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRouteWithChildren
   '/lessons/$slug': typeof LessonsSlugRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/badges': typeof BadgesRoute
+  '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRouteWithChildren
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/badges' | '/leaderboard' | '/lessons' | '/lessons/$slug'
+  fullPaths:
+    | '/'
+    | '/badges'
+    | '/certificate'
+    | '/leaderboard'
+    | '/lessons'
+    | '/lessons/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/badges' | '/leaderboard' | '/lessons' | '/lessons/$slug'
+  to:
+    | '/'
+    | '/badges'
+    | '/certificate'
+    | '/leaderboard'
+    | '/lessons'
+    | '/lessons/$slug'
   id:
     | '__root__'
     | '/'
     | '/badges'
+    | '/certificate'
     | '/leaderboard'
     | '/lessons'
     | '/lessons/$slug'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BadgesRoute: typeof BadgesRoute
+  CertificateRoute: typeof CertificateRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LessonsRoute: typeof LessonsRouteWithChildren
 }
@@ -98,6 +121,13 @@ declare module '@tanstack/react-router' {
       path: '/leaderboard'
       fullPath: '/leaderboard'
       preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/certificate': {
+      id: '/certificate'
+      path: '/certificate'
+      fullPath: '/certificate'
+      preLoaderRoute: typeof CertificateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/badges': {
@@ -138,6 +168,7 @@ const LessonsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BadgesRoute: BadgesRoute,
+  CertificateRoute: CertificateRoute,
   LeaderboardRoute: LeaderboardRoute,
   LessonsRoute: LessonsRouteWithChildren,
 }
