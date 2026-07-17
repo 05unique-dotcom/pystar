@@ -49,7 +49,7 @@ function LessonPage() {
   const quizDone = p.passedQuizzes.includes(lesson.slug);
 
   const correct = lesson.quiz.filter((q, i) => answers[i] === q.answer).length;
-  const passed = correct === lesson.quiz.length;
+  const passed = correct / lesson.quiz.length >= 0.7;
 
   const finishRead = () => {
     completeLesson(lesson.slug);
