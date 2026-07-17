@@ -162,7 +162,7 @@ function LessonPage() {
                   {correct} / {lesson.quiz.length} correct
                 </p>
                 <p className="text-sm opacity-80">
-                  {passed ? "Shabaash! Quiz pass ho gaya. +30 points." : "Thoda aur try karo, tum kar sakte ho."}
+                  {passed ? "Well done! You passed the quiz. +30 points." : "Almost there — give it another try!"}
                 </p>
                 <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
                   <button
