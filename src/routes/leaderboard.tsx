@@ -69,7 +69,7 @@ function LeaderboardPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <main className="mx-auto max-w-4xl px-4 py-6 sm:py-10">
-        <div className="rounded-3xl border border-border bg-gradient-to-br from-yellow-500/10 via-fuchsia-500/10 to-cyan-500/10 p-5 sm:p-8">
+        <div className="rounded-3xl border border-border bg-gradient-to-br from-amber-500/5 via-indigo-500/5 to-sky-500/5 p-5 sm:p-8">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium backdrop-blur">
             <Trophy className="h-3 w-3 text-yellow-500" /> Leaderboard
           </div>

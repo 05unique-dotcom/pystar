@@ -108,8 +108,8 @@ function CertificatePage() {
             style={{ aspectRatio: "1.414 / 1" }}
           >
             {/* Decorative gradient corners */}
-            <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-cyan-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-yellow-400/25 to-fuchsia-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500/10 to-sky-500/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/15 to-indigo-500/10 blur-3xl" />
 
             <div className="relative flex h-full flex-col items-center justify-between text-center">
               <div>
@@ -122,7 +122,7 @@ function CertificatePage() {
               </div>
 
               <div className="my-4">
-                <p className="bg-gradient-to-r from-fuchsia-600 to-cyan-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl">
+                <p className="bg-gradient-to-r from-indigo-700 to-sky-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl">
                   {p.name?.trim() || "Your Name Here"}
                 </p>
                 <div className="mx-auto mt-2 h-0.5 w-40 bg-slate-300" />

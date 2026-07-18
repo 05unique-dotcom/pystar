@@ -126,7 +126,7 @@ function Dashboard() {
                   key={b.id}
                   className={`rounded-2xl border p-3 text-center transition ${
                     got
-                      ? "border-transparent bg-gradient-to-br from-yellow-400/20 to-fuchsia-500/20 shadow-inner"
+                      ? "border-transparent bg-gradient-to-br from-amber-400/15 to-indigo-500/15 shadow-inner"
                       : "border-border bg-card opacity-60"
                   }`}
                 >
