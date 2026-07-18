@@ -14,7 +14,7 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as LessonsSlugRouteImport } from './routes/lessons.$slug'
+import { Route as LessonsSlugRouteImport } from './routes/lessons_.$slug'
 
 const LessonsRoute = LessonsRouteImport.update({
   id: '/lessons',
@@ -42,9 +42,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const LessonsSlugRoute = LessonsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => LessonsRoute,
+  id: '/lessons_/$slug',
+  path: '/lessons/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -52,7 +52,7 @@ export interface FileRoutesByFullPath {
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/lessons': typeof LessonsRouteWithChildren
+  '/lessons': typeof LessonsRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -60,7 +60,7 @@ export interface FileRoutesByTo {
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/lessons': typeof LessonsRouteWithChildren
+  '/lessons': typeof LessonsRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesById {
@@ -69,8 +69,8 @@ export interface FileRoutesById {
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/lessons': typeof LessonsRouteWithChildren
-  '/lessons/$slug': typeof LessonsSlugRoute
+  '/lessons': typeof LessonsRoute
+  '/lessons_/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
-    | '/lessons/$slug'
+    | '/lessons_/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,7 +104,8 @@ export interface RootRouteChildren {
   BadgesRoute: typeof BadgesRoute
   CertificateRoute: typeof CertificateRoute
   LeaderboardRoute: typeof LeaderboardRoute
-  LessonsRoute: typeof LessonsRouteWithChildren
+  LessonsRoute: typeof LessonsRoute
+  LessonsSlugRoute: typeof LessonsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,33 +145,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lessons/$slug': {
-      id: '/lessons/$slug'
-      path: '/$slug'
+    '/lessons_/$slug': {
+      id: '/lessons_/$slug'
+      path: '/lessons/$slug'
       fullPath: '/lessons/$slug'
       preLoaderRoute: typeof LessonsSlugRouteImport
-      parentRoute: typeof LessonsRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface LessonsRouteChildren {
-  LessonsSlugRoute: typeof LessonsSlugRoute
-}
-
-const LessonsRouteChildren: LessonsRouteChildren = {
-  LessonsSlugRoute: LessonsSlugRoute,
-}
-
-const LessonsRouteWithChildren =
-  LessonsRoute._addFileChildren(LessonsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BadgesRoute: BadgesRoute,
   CertificateRoute: CertificateRoute,
   LeaderboardRoute: LeaderboardRoute,
-  LessonsRoute: LessonsRouteWithChildren,
+  LessonsRoute: LessonsRoute,
+  LessonsSlugRoute: LessonsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
