@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 
-const KEY = "pyl:progress:v1";
+const KEY = "pyl:progress:v2";
 
 export type Progress = {
   name: string;
