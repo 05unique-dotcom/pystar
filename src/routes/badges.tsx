@@ -39,7 +39,7 @@ function BadgesPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
-        <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-br from-yellow-500/10 via-fuchsia-500/10 to-cyan-500/10 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-br from-amber-500/5 via-indigo-500/5 to-sky-500/5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium backdrop-blur">
               <Trophy className="h-3 w-3 text-yellow-500" /> Achievements
@@ -56,7 +56,7 @@ function BadgesPage() {
             </div>
             <div className="h-2.5 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-fuchsia-500 to-cyan-500 transition-all duration-700"
+                className="h-full rounded-full bg-gradient-to-r from-amber-400 via-indigo-500 to-sky-500 transition-all duration-700"
                 style={{ width: `${totalPct}%` }}
               />
             </div>
@@ -79,7 +79,7 @@ function BadgesPage() {
                       key={b.id}
                       className={`rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:shadow-xl ${
                         got
-                          ? "border-transparent bg-gradient-to-br from-yellow-400/15 via-fuchsia-500/15 to-cyan-500/15 shadow-lg"
+                          ? "border-transparent bg-gradient-to-br from-amber-400/10 via-indigo-500/10 to-sky-500/10 shadow-lg"
                           : "border-border bg-card"
                       }`}
                     >
@@ -102,7 +102,7 @@ function BadgesPage() {
                         </div>
                         <div className="h-2 overflow-hidden rounded-full bg-muted">
                           <div
-                            className={`h-full rounded-full transition-all duration-700 ${got ? "bg-gradient-to-r from-yellow-400 to-fuchsia-500" : "bg-gradient-to-r from-fuchsia-500 to-cyan-500"}`}
+                            className={`h-full rounded-full transition-all duration-700 ${got ? "bg-gradient-to-r from-amber-400 to-indigo-500" : "bg-gradient-to-r from-indigo-600 to-sky-500"}`}
                             style={{ width: `${pct}%` }}
                           />
                         </div>

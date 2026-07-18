@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { Nav } from "@/components/nav";
 import { LESSONS, BADGES } from "@/lib/lessons-data";
-import { tickStreak, useProgress } from "@/lib/progress-store";
+import { useProgress } from "@/lib/progress-store";
 import { Flame, Trophy, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -25,9 +24,6 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const p = useProgress();
-  useEffect(() => {
-    tickStreak();
-  }, []);
 
   const total = LESSONS.length;
   const done = p.completedLessons.length;
@@ -44,15 +40,15 @@ function Dashboard() {
       <Nav />
       <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-fuchsia-500/10 via-purple-500/10 to-cyan-500/10 p-5 sm:p-8">
-          <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-fuchsia-500/20 blur-3xl" />
-          <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
+        <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-indigo-500/5 via-slate-500/5 to-sky-500/5 p-5 sm:p-8">
+          <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-indigo-500/10 blur-3xl" />
+          <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-sky-500/10 blur-3xl" />
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium backdrop-blur">
-              <Sparkles className="h-3 w-3 text-fuchsia-500" /> Playful Python
+              <Sparkles className="h-3 w-3 text-indigo-600" /> Playful Python
             </div>
             <h1 className="mt-3 text-2xl font-black tracking-tight sm:text-4xl">
-              Hello, coder! <span className="bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">Let's learn Python.</span>
+              Hello, coder! <span className="bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">Let's learn Python.</span>
             </h1>
             <p className="mt-2 max-w-lg text-sm text-muted-foreground sm:text-base">
               Bite-sized lessons, fun quizzes, and a daily streak — all in one place.
@@ -72,7 +68,7 @@ function Dashboard() {
               </div>
               <div className="h-2.5 overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 transition-all duration-700"
+                  className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-sky-500 transition-all duration-700"
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -84,7 +80,7 @@ function Dashboard() {
         <section className="mt-8">
           <div className="mb-3 flex items-end justify-between">
             <h2 className="text-lg font-bold sm:text-xl">Continue learning</h2>
-            <Link to="/lessons" className="text-xs font-semibold text-fuchsia-500 hover:underline">
+            <Link to="/lessons" className="text-xs font-semibold text-indigo-600 hover:underline">
               See all →
             </Link>
           </div>
@@ -130,7 +126,7 @@ function Dashboard() {
                   key={b.id}
                   className={`rounded-2xl border p-3 text-center transition ${
                     got
-                      ? "border-transparent bg-gradient-to-br from-yellow-400/20 to-fuchsia-500/20 shadow-inner"
+                      ? "border-transparent bg-gradient-to-br from-amber-400/15 to-indigo-500/15 shadow-inner"
                       : "border-border bg-card opacity-60"
                   }`}
                 >

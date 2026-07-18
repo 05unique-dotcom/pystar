@@ -49,7 +49,7 @@ function CertificatePage() {
       <main className="mx-auto max-w-4xl px-4 py-6 sm:py-10 print:p-0">
         <div className="print:hidden">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-medium">
-            <Award className="h-3 w-3 text-fuchsia-500" /> Certificate
+            <Award className="h-3 w-3 text-indigo-600" /> Certificate
           </div>
           <h1 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Certificate of Completion</h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ function CertificatePage() {
             </div>
             <div className="h-2.5 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 transition-all duration-700"
+                className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-sky-500 transition-all duration-700"
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -77,14 +77,14 @@ function CertificatePage() {
                 onChange={(e) => setNameInput(e.target.value)}
                 onBlur={() => setName(nameInput.trim().slice(0, 40))}
                 placeholder="Your full name"
-                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/20"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20"
               />
             </label>
             <div className="flex gap-2">
               <button
                 disabled={!complete || !p.name}
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-fuchsia-500 to-cyan-500 px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-sky-500 px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {complete ? <Download className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
                 {complete ? "Download / Print" : "Locked"}
@@ -94,7 +94,7 @@ function CertificatePage() {
           {!complete && (
             <p className="mt-3 text-xs text-muted-foreground">
               You still have {Math.max(0, totalLessons - lessonsDone)} lesson(s) and {Math.max(0, totalLessons - quizzesDone)} quiz(zes) left.{" "}
-              <Link to="/lessons" className="font-semibold text-fuchsia-500 hover:underline">Continue learning →</Link>
+              <Link to="/lessons" className="font-semibold text-indigo-600 hover:underline">Continue learning →</Link>
             </p>
           )}
         </div>
@@ -108,12 +108,12 @@ function CertificatePage() {
             style={{ aspectRatio: "1.414 / 1" }}
           >
             {/* Decorative gradient corners */}
-            <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-cyan-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-yellow-400/25 to-fuchsia-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500/10 to-sky-500/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/15 to-indigo-500/10 blur-3xl" />
 
             <div className="relative flex h-full flex-col items-center justify-between text-center">
               <div>
-                <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-cyan-500 text-2xl text-white shadow-lg">
+                <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-indigo-600 to-sky-500 text-2xl text-white shadow-lg">
                   🐍
                 </div>
                 <p className="mt-3 text-xs font-bold uppercase tracking-[0.3em] text-slate-500">PyLearn Academy</p>
@@ -122,7 +122,7 @@ function CertificatePage() {
               </div>
 
               <div className="my-4">
-                <p className="bg-gradient-to-r from-fuchsia-600 to-cyan-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl">
+                <p className="bg-gradient-to-r from-indigo-700 to-sky-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl">
                   {p.name?.trim() || "Your Name Here"}
                 </p>
                 <div className="mx-auto mt-2 h-0.5 w-40 bg-slate-300" />
