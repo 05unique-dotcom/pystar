@@ -24,9 +24,6 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const p = useProgress();
-  useEffect(() => {
-    tickStreak();
-  }, []);
 
   const total = LESSONS.length;
   const done = p.completedLessons.length;
