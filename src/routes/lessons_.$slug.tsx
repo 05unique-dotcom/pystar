@@ -5,7 +5,7 @@ import { Nav } from "@/components/nav";
 import { LESSONS } from "@/lib/lessons-data";
 import { completeLesson, passQuiz, useProgress } from "@/lib/progress-store";
 
-export const Route = createFileRoute("/lessons/$slug")({
+export const Route = createFileRoute("/lessons_/$slug")({
   loader: ({ params }) => {
     const lesson = LESSONS.find((l) => l.slug === params.slug);
     if (!lesson) throw notFound();
