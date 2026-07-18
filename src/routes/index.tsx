@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { Nav } from "@/components/nav";
 import { LESSONS, BADGES } from "@/lib/lessons-data";
-import { tickStreak, useProgress } from "@/lib/progress-store";
+import { useProgress } from "@/lib/progress-store";
 import { Flame, Trophy, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
