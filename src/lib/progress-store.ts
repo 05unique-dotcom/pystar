@@ -87,6 +87,7 @@ export function completeLesson(slug: string) {
     p.points = cache.points + 20;
   }
   write(p);
+  tickStreak();
 }
 
 export function passQuiz(slug: string) {
@@ -97,6 +98,7 @@ export function passQuiz(slug: string) {
     p.points = cache.points + 30;
   }
   write(p);
+  tickStreak();
 }
 
 export function tickStreak() {
