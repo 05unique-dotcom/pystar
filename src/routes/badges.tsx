@@ -102,7 +102,7 @@ function BadgesPage() {
                         </div>
                         <div className="h-2 overflow-hidden rounded-full bg-muted">
                           <div
-                            className={`h-full rounded-full transition-all duration-700 ${got ? "bg-gradient-to-r from-yellow-400 to-fuchsia-500" : "bg-gradient-to-r from-fuchsia-500 to-cyan-500"}`}
+                            className={`h-full rounded-full transition-all duration-700 ${got ? "bg-gradient-to-r from-yellow-400 to-fuchsia-500" : "bg-gradient-to-r from-indigo-600 to-sky-500"}`}
                             style={{ width: `${pct}%` }}
                           />
                         </div>

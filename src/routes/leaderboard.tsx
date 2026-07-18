@@ -100,7 +100,7 @@ function LeaderboardPage() {
                 onChange={(e) => setNameInput(e.target.value)}
                 onBlur={() => setName(nameInput.trim().slice(0, 24))}
                 placeholder="Your display name"
-                className="w-48 rounded-lg border border-border bg-background px-3 py-1.5 text-sm outline-none focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/20"
+                className="w-48 rounded-lg border border-border bg-background px-3 py-1.5 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ function LeaderboardPage() {
             return (
               <div key={r.id} className="flex flex-col items-center">
                 <div className="text-3xl">{medals[i]}</div>
-                <div className={`mt-1 truncate max-w-full text-center text-sm font-bold ${r.isYou ? "text-fuchsia-500" : ""}`}>
+                <div className={`mt-1 truncate max-w-full text-center text-sm font-bold ${r.isYou ? "text-indigo-600" : ""}`}>
                   {r.name}
                 </div>
                 <div className="text-xs text-muted-foreground">{r.points} pts</div>
@@ -147,7 +147,7 @@ function LeaderboardPage() {
                 <li
                   key={r.id}
                   className={`grid grid-cols-[3rem_1fr_auto_auto_auto] items-center gap-2 border-b border-border/60 px-4 py-3 text-sm transition last:border-0 ${
-                    r.isYou ? "bg-fuchsia-500/10" : "hover:bg-accent/50"
+                    r.isYou ? "bg-indigo-500/10" : "hover:bg-accent/50"
                   }`}
                 >
                   <span className="flex items-center gap-1 font-bold">
@@ -157,11 +157,11 @@ function LeaderboardPage() {
                     {rank > 3 && <span className="text-muted-foreground">{rank}</span>}
                   </span>
                   <span className="flex min-w-0 items-center gap-2">
-                    <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-bold ${r.isYou ? "bg-gradient-to-br from-fuchsia-500 to-cyan-500 text-white" : "bg-accent text-foreground"}`}>
+                    <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-bold ${r.isYou ? "bg-gradient-to-br from-indigo-600 to-sky-500 text-white" : "bg-accent text-foreground"}`}>
                       {(r.name || "?").slice(0, 1).toUpperCase()}
                     </span>
                     <span className="min-w-0 truncate font-medium">
-                      {r.name} {r.isYou && <span className="ml-1 rounded-full bg-fuchsia-500/20 px-2 py-0.5 text-[10px] font-bold text-fuchsia-500">YOU</span>}
+                      {r.name} {r.isYou && <span className="ml-1 rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-bold text-indigo-600">YOU</span>}
                     </span>
                   </span>
                   <span className="hidden sm:inline text-right text-muted-foreground">{r.lessons}/{LESSONS.length}</span>

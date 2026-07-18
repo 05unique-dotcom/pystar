@@ -24,7 +24,7 @@ export const Route = createFileRoute("/lessons/$slug")({
       <Nav />
       <div className="mx-auto max-w-md p-10 text-center">
         <p className="text-2xl font-bold">Lesson not found</p>
-        <Link to="/lessons" className="mt-3 inline-block text-fuchsia-500 hover:underline">
+        <Link to="/lessons" className="mt-3 inline-block text-indigo-600 hover:underline">
           ← Back to lessons
         </Link>
       </div>
@@ -102,7 +102,7 @@ function LessonPage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <button
                 onClick={finishRead}
-                className="flex-1 rounded-xl bg-gradient-to-r from-fuchsia-500 to-cyan-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-fuchsia-500/25 transition hover:opacity-95"
+                className="flex-1 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:opacity-95"
               >
                 {done ? "Try the quiz again" : "Mark complete & take quiz"}
               </button>
@@ -131,8 +131,8 @@ function LessonPage() {
                             : isWrongSel
                               ? "border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400"
                               : selected
-                                ? "border-fuchsia-500 bg-fuchsia-500/10"
-                                : "border-border hover:border-fuchsia-400/60 hover:bg-accent"
+                                ? "border-indigo-500 bg-indigo-500/10"
+                                : "border-border hover:border-indigo-400/60 hover:bg-accent"
                         }`}
                       >
                         {opt}
@@ -147,7 +147,7 @@ function LessonPage() {
               <button
                 disabled={Object.keys(answers).length !== lesson.quiz.length}
                 onClick={submitQuiz}
-                className="w-full rounded-xl bg-gradient-to-r from-fuchsia-500 to-cyan-500 px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
+                className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-sky-500 px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Submit answers
               </button>

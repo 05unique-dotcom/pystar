@@ -44,7 +44,7 @@ function LessonsPage() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search lessons…"
-              className="w-full rounded-xl border border-border bg-card py-2 pl-9 pr-8 text-sm outline-none transition focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/20"
+              className="w-full rounded-xl border border-border bg-card py-2 pl-9 pr-8 text-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20"
             />
             {q && (
               <button
@@ -73,7 +73,7 @@ function LessonsPage() {
                   key={l.slug}
                   to="/lessons/$slug"
                   params={{ slug: l.slug }}
-                  className="group animate-fade-in relative overflow-hidden rounded-2xl border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:shadow-xl"
+                  className="group animate-fade-in relative overflow-hidden rounded-2xl border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:border-indigo-400/40 hover:shadow-xl"
                   style={{ animationDelay: `${i * 40}ms` }}
                 >
                   <div className={`mb-3 grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${l.gradient} text-xl shadow-lg`}>
@@ -89,7 +89,7 @@ function LessonsPage() {
                     {done ? (
                       <span className="font-semibold text-emerald-500">Completed</span>
                     ) : (
-                      <span className="font-semibold text-fuchsia-500">Start →</span>
+                      <span className="font-semibold text-indigo-600">Start →</span>
                     )}
                   </div>
                 </Link>
