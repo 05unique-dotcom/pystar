@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       { title: "PyLearn — Learn Python the Modern Way" },
       { name: "description", content: "Premium interactive Python lessons, quizzes, badges, and streaks. Mobile-first and beautifully designed." },
       { property: "og:title", content: "PyLearn — Learn Python the Modern Way" },
-      { property: "og:description", content: "Lessons, quizzes, badges, and streaks." },
+      { property: "og:description", content: "Premium interactive Python lessons, quizzes, badges, and streaks. Mobile-first and beautifully designed." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

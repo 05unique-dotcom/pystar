@@ -77,17 +77,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PyLearn — Learn Python the Fun Way" },
+      { title: "PyLearn — Learn Python the Modern Way" },
       {
         name: "description",
         content:
-          "Interactive Python lessons, quizzes, badges, and daily streaks. Learn Python step-by-step in a colorful, mobile-first app.",
+          "Premium interactive Python lessons, quizzes, badges, and streaks. Mobile-first and beautifully designed.",
       },
       { name: "author", content: "PyLearn" },
-      { property: "og:title", content: "PyLearn — Learn Python the Fun Way" },
-      { property: "og:description", content: "Lessons, quizzes, badges, and streaks. Playful Python learning." },
+      { property: "og:title", content: "PyLearn — Learn Python the Modern Way" },
+      { property: "og:description", content: "Premium interactive Python lessons, quizzes, badges, and streaks. Mobile-first and beautifully designed." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "PyLearn — Learn Python the Modern Way" },
+      { name: "twitter:description", content: "Premium interactive Python lessons, quizzes, badges, and streaks. Mobile-first and beautifully designed." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ed110fe9-b541-4cdb-8bb2-f641a2d896fe/id-preview-ec516bfc--11ca6b47-9cc8-44a5-8b68-857229f0a3b1.lovable.app-1784437712214.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ed110fe9-b541-4cdb-8bb2-f641a2d896fe/id-preview-ec516bfc--11ca6b47-9cc8-44a5-8b68-857229f0a3b1.lovable.app-1784437712214.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
