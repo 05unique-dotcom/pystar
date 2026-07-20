@@ -62,19 +62,7 @@ npm run dev
 
 ## 📸 Screenshots
 
-Home | Lessons | Badges |
-|------|---------|--------|
-| 
 
-![home](assets/Screenshot_2026_0720_095537.jpg)
-
- | 
-
-![lessons](assets/Screenshot_2026_0720_095601.jpg)
-
- | 
-
-![badges](assets/Screenshot_2026_0720_095626.jpg) 
 
  | [🏠 Home](assets/Screenshot_2026_0720_095537.jpg) | [📚 Lessons](assets/Screenshot_2026_0720_095601.jpg) | [🏅 Badges](assets/Screenshot_2026_0720_095626.jpg) |
 |---|---|---|
