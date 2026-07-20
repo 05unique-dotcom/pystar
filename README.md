@@ -1,4 +1,6 @@
-# 🐍 PyLearn — Learn Python the Modern Way
+# 🐍 PyStar — Learn Python the Modern Way
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![Live Demo](https://img.shields.io/badge/demo-pystar.lovable.app-blue)](https://pystar.lovable.app)
 
 > An interactive Python learning platform with lessons, quizzes, badges, streaks, a leaderboard, and a certificate of completion.
 
@@ -29,14 +31,6 @@
 
 ---
 
-## 📸 Screenshots
-
-| Home | Lessons | Badges |
-|------|---------|--------|
-| Dashboard with XP & streak | 6-lesson roadmap | 9 unlockable achievements |
-
----
-
 ## 🚀 Getting Started
 
 ```bash
@@ -51,6 +45,8 @@ npm install
 npm run dev
 ```
 
+> Note: Recommended Node.js version: 18+
+
 ---
 
 ## 📖 Lessons Covered
@@ -64,11 +60,30 @@ npm run dev
 
 ---
 
+## 📸 Screenshots
+
+Add screenshots in `docs/assets/` or `public/screenshots/` and update paths below:
+
+| Home | Lessons | Badges |
+|------|---------|--------|
+| ![home](docs/assets/home.png) | ![lessons](docs/assets/lessons.png) | ![badges](docs/assets/badges.png) |
+
+---
+
+## ✅ Checklist (before sharing)
+
+- [ ] Add real screenshots to `docs/assets/` or `public/screenshots/`
+- [ ] Add `.env.example` if the app requires environment variables
+- [ ] Add `.gitignore` to ignore `node_modules`, `dist`, and local env files
+- [ ] Add tests and CI (optional)
+
+---
+
 ## 👨‍💻 Author
 
-**Arshad Ansari**
+**Arshad Ansari (05unique-dotcom)**
 - GitHub: [@05unique-dotcom](https://github.com/05unique-dotcom)
-- App: [pystar.lovable.app](https://pystar.lovable.app)
+- Live app: [pystar.lovable.app](https://pystar.lovable.app)
 
 ---
 
@@ -78,4 +93,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-⭐ If you found this helpful, give it a star!
+If you want, I can also add screenshots and CI badges, or create CONTRIBUTING.md and CODE_OF_CONDUCT files.
