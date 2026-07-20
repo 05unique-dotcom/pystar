@@ -62,12 +62,21 @@ npm run dev
 
 ## 📸 Screenshots
 
-Add screenshots in `docs/assets/` or `public/screenshots/` and update paths below:
-
 | Home | Lessons | Badges |
 |------|---------|--------|
-| ![home](docs/assets/home.png) | ![lessons](docs/assets/lessons.png) | ![badges](docs/assets/badges.png) | !
+| 
 
+![home](assets/Screenshot_2026_0720_095537.jpg)
+
+ | 
+
+![lessons](assets/Screenshot_2026_0720_095601.jpg)
+
+ | 
+
+![badges](assets/Screenshot_2026_0720_095626.jpg)
+
+ |
 ---
 
 ## ✅ Checklist (before sharing)
