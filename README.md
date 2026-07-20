@@ -76,7 +76,7 @@ npm run dev
 
 ![badges](assets/Screenshot_2026_0720_095626.jpg)
 
- |
+ 
 ---
 
 ## ✅ Checklist (before sharing)
