@@ -66,7 +66,7 @@ Add screenshots in `docs/assets/` or `public/screenshots/` and update paths belo
 
 | Home | Lessons | Badges |
 |------|---------|--------|
-| ![home](docs/assets/home.png) | ![lessons](docs/assets/lessons.png) | ![badges](docs/assets/badges.png) |
+| ![home](docs/assets/home.png) | ![lessons](docs/assets/lessons.png) | ![badges](docs/assets/badges.png) | !
 
 ---
 
