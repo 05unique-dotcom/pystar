@@ -62,7 +62,7 @@ npm run dev
 
 ## 📸 Screenshots
 
-| Home | Lessons | Badges |
+Home | Lessons | Badges |
 |------|---------|--------|
 | 
 
