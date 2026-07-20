@@ -76,7 +76,8 @@ Home | Lessons | Badges |
 
 ![badges](assets/Screenshot_2026_0720_095626.jpg) 
 
- 
+ | [🏠 Home](assets/Screenshot_2026_0720_095537.jpg) | [📚 Lessons](assets/Screenshot_2026_0720_095601.jpg) | [🏅 Badges](assets/Screenshot_2026_0720_095626.jpg) |
+|---|---|---|
 ---
 
 ## ✅ Checklist (before sharing)
