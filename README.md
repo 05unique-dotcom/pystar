@@ -63,11 +63,9 @@ npm run dev
 ## 📸 Screenshots
 
 
+| [🏠 Home](assets/Screenshot_2026_0720_095537.jpg) | [📚 Lessons](assets/Screenshot_2026_0720_095601.jpg) | [🏅 Badges](assets/Screenshot_2026_0720_095626.jpg) | [🏆 Leaderboard](assets/Screenshot_2026_0720_095652.jpg) | [🎓 Certificate](assets/Screenshot_2026_0720_095714.jpg) |
+|---|---|---|---|---|
 
- | [🏠 Home](assets/Screenshot_2026_0720_095537.jpg) | [📚 Lessons](assets/Screenshot_2026_0720_095601.jpg) | [🏅 Badges](assets/Screenshot_2026_0720_095626.jpg) |
-[Leaderboard](assets/
-Screenshot_2026_0720_095652.jpg) |[Certificate Of Complition](assets/Screenshot_2026_0720_095714.jpg) |
-|---|---|---|
 ---
 
 ## ✅ Checklist (before sharing)
