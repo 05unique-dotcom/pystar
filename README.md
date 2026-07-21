@@ -91,4 +91,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-If you want, I can also add screenshots and CI badges, or create CONTRIBUTING.md and CODE_OF_CONDUCT files.
