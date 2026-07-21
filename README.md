@@ -85,6 +85,15 @@ npm run dev
 
 ---
 
+## ⭐ Show Your Support
+
+If you found this project helpful, please:
+- ⭐ Give it a star on GitHub
+- 🍴 Fork it for your own learning
+- 💬 Share feedback and suggestions
+- 🤝 Contribute improvements
+
+Your support motivates me to build more educational and open-source projects! 🚀
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
