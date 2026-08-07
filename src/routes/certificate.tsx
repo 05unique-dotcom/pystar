@@ -168,10 +168,27 @@ function CertificatePage() {
       </main>
 
       <style>{`
+        .cert-name {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
         @media print {
           @page { size: A4 landscape; margin: 0; }
           body { background: white; }
           header, nav, .print\\:hidden { display: none !important; }
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+          .cert-name {
+            background: none !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+            -webkit-text-fill-color: #3730a3 !important;
+            color: #3730a3 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
+            min-height: 1.2em !important;
+            overflow: visible !important;
+          }
         }
       `}</style>
     </div>
