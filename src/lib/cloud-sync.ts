@@ -84,14 +84,24 @@ export type LeaderboardRow = {
 
 /** Public top-10 by XP. Readable without signing in. */
 export async function fetchLeaderboard(limit = 10): Promise<LeaderboardRow[]> {
-  const { data } = await supabase
+  const { data: xp } = await supabase
     .from("xp_points")
-    .select("user_id, total, profiles!inner(display_name, avatar_url, streak)")
+    .select("user_id, total")
     .order("total", { ascending: false })
     .limit(limit);
 
-  return (data ?? []).map((r) => {
-    const profile = r.profiles as unknown as { display_name: string; avatar_url: string | null; streak: number };
+  const rows = xp ?? [];
+  if (!rows.length) return [];
+
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, display_name, avatar_url, streak")
+    .in("id", rows.map((r) => r.user_id));
+
+  const byId = new Map((profiles ?? []).map((p) => [p.id, p]));
+
+  return rows.map((r) => {
+    const profile = byId.get(r.user_id);
     return {
       user_id: r.user_id,
       total: r.total,
@@ -101,3 +111,4 @@ export async function fetchLeaderboard(limit = 10): Promise<LeaderboardRow[]> {
     };
   });
 }
+
