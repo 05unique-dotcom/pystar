@@ -122,7 +122,10 @@ function CertificatePage() {
               </div>
 
               <div className="my-4">
-                <p className="bg-gradient-to-r from-indigo-700 to-sky-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl">
+                <p
+                  className="cert-name bg-gradient-to-r from-indigo-700 to-sky-600 bg-clip-text text-3xl font-black text-transparent sm:text-5xl"
+                  style={{ minHeight: "1.2em", opacity: 1 }}
+                >
                   {p.name?.trim() || "Your Name Here"}
                 </p>
                 <div className="mx-auto mt-2 h-0.5 w-40 bg-slate-300" />
