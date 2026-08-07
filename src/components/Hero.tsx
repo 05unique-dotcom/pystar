@@ -26,7 +26,7 @@ type Props = {
 
 export function Hero({ name, points, streak, level, completedSlugs, completionPct, hydrated }: Props) {
   const nextLesson = LESSONS.find((l) => !completedSlugs.includes(l.slug)) ?? LESSONS[0];
-  const quote = QUOTES[new Date().getDate() % QUOTES.length];
+  const quote = hydrated ? QUOTES[new Date().getDate() % QUOTES.length] : QUOTES[0];
   const xpToNext = 200 - (points % 200);
 
   return (
