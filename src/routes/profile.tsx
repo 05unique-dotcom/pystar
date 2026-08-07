@@ -165,7 +165,7 @@ function ProfilePage() {
                   }`}
                   style={has ? { background: "var(--gradient-brand)" } : undefined}
                 >
-                  <span aria-hidden="true">{b.emoji}</span> {b.title}
+                  <span aria-hidden="true">{b.emoji}</span> {b.name}
                 </span>
               );
             })}

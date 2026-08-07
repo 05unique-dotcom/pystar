@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LessonsRouteImport } from './routes/lessons'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as CertificateRouteImport } from './routes/certificate'
@@ -17,6 +18,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LessonsSlugRouteImport } from './routes/lessons_.$slug'
 
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LessonsRoute = LessonsRouteImport.update({
   id: '/lessons',
   path: '/lessons',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons_/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons/$slug'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons_/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -118,11 +130,19 @@ export interface RootRouteChildren {
   CertificateRoute: typeof CertificateRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LessonsRoute: typeof LessonsRoute
+  ProfileRoute: typeof ProfileRoute
   LessonsSlugRoute: typeof LessonsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lessons': {
       id: '/lessons'
       path: '/lessons'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   CertificateRoute: CertificateRoute,
   LeaderboardRoute: LeaderboardRoute,
   LessonsRoute: LessonsRoute,
+  ProfileRoute: ProfileRoute,
   LessonsSlugRoute: LessonsSlugRoute,
 }
 export const routeTree = rootRouteImport
