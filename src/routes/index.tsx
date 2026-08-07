@@ -28,7 +28,7 @@ function Dashboard() {
   const total = LESSONS.length;
   const done = p.completedLessons.length;
   const pct = total ? Math.round((done / total) * 100) : 0;
-  const level = Math.floor(p.points / 200) + 1;
+  const level = Math.floor(p.points / 100) + 1;
 
   const earnedBadges = BADGES.filter((b) => {
     if (b.type === "quiz") return p.passedQuizzes.length >= b.need;
@@ -61,7 +61,7 @@ function Dashboard() {
         {/* Stats */}
         <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <StatCard icon={Flame} label="Streak" value={p.hydrated ? `${p.streak}d` : "0d"} sub="Daily activity" gradient="from-orange-500 to-rose-500" progress={Math.min(100, (p.streak / 7) * 100)} delay={0.02} />
-          <StatCard icon={Star} label="XP" value={p.hydrated ? p.points : 0} sub={`Level ${level}`} gradient="from-amber-400 to-yellow-500" progress={((p.points % 200) / 200) * 100} delay={0.06} />
+          <StatCard icon={Star} label="XP" value={p.hydrated ? p.points : 0} sub={`Level ${level}`} gradient="from-amber-400 to-yellow-500" progress={((p.points % 100) / 100) * 100} delay={0.06} />
           <StatCard icon={BookOpen} label="Lessons" value={`${done}/${total}`} sub={`${pct}% complete`} gradient="from-indigo-500 to-violet-500" progress={pct} delay={0.1} />
           <StatCard icon={Trophy} label="Badges" value={p.hydrated ? earnedBadges.length : 0} sub={`of ${BADGES.length}`} gradient="from-emerald-500 to-teal-500" progress={(earnedBadges.length / BADGES.length) * 100} delay={0.14} />
         </section>
