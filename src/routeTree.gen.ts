@@ -9,13 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LessonsRouteImport } from './routes/lessons'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as CertificateRouteImport } from './routes/certificate'
 import { Route as BadgesRouteImport } from './routes/badges'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LessonsSlugRouteImport } from './routes/lessons_.$slug'
 
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LessonsRoute = LessonsRouteImport.update({
   id: '/lessons',
   path: '/lessons',
@@ -36,6 +43,11 @@ const BadgesRoute = BadgesRouteImport.update({
   path: '/badges',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,67 +61,88 @@ const LessonsSlugRoute = LessonsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons/$slug': typeof LessonsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/badges': typeof BadgesRoute
   '/certificate': typeof CertificateRoute
   '/leaderboard': typeof LeaderboardRoute
   '/lessons': typeof LessonsRoute
+  '/profile': typeof ProfileRoute
   '/lessons_/$slug': typeof LessonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/badges'
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/badges'
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons/$slug'
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/badges'
     | '/certificate'
     | '/leaderboard'
     | '/lessons'
+    | '/profile'
     | '/lessons_/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   BadgesRoute: typeof BadgesRoute
   CertificateRoute: typeof CertificateRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LessonsRoute: typeof LessonsRoute
+  ProfileRoute: typeof ProfileRoute
   LessonsSlugRoute: typeof LessonsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lessons': {
       id: '/lessons'
       path: '/lessons'
@@ -138,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BadgesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -157,10 +197,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   BadgesRoute: BadgesRoute,
   CertificateRoute: CertificateRoute,
   LeaderboardRoute: LeaderboardRoute,
   LessonsRoute: LessonsRoute,
+  ProfileRoute: ProfileRoute,
   LessonsSlugRoute: LessonsSlugRoute,
 }
 export const routeTree = rootRouteImport

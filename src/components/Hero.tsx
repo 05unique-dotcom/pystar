@@ -27,7 +27,7 @@ type Props = {
 export function Hero({ name, points, streak, level, completedSlugs, completionPct, hydrated }: Props) {
   const nextLesson = LESSONS.find((l) => !completedSlugs.includes(l.slug)) ?? LESSONS[0];
   const quote = hydrated ? QUOTES[new Date().getDate() % QUOTES.length] : QUOTES[0];
-  const xpToNext = 200 - (points % 200);
+  const xpToNext = 100 - (points % 100);
 
   return (
     <section className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-[var(--shadow-soft)] sm:p-8">

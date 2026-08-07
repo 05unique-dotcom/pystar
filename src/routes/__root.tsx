@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { CloudSync } from "@/components/CloudSync";
+import { Toaster } from "@/components/ui/sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -130,8 +133,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <CloudSync />
+      <Toaster position="top-center" richColors />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
 }
+

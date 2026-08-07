@@ -1,13 +1,13 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Home, BookOpen, Trophy, Medal, Award } from "lucide-react";
+import { Home, BookOpen, Trophy, Medal, User } from "lucide-react";
 
-const items: { to: "/" | "/lessons" | "/badges" | "/leaderboard" | "/certificate"; label: string; icon: typeof Home; exact?: boolean }[] = [
+const items: { to: "/" | "/lessons" | "/badges" | "/leaderboard" | "/profile"; label: string; icon: typeof Home; exact?: boolean }[] = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/lessons", label: "Lessons", icon: BookOpen },
   { to: "/badges", label: "Badges", icon: Trophy },
   { to: "/leaderboard", label: "Ranks", icon: Medal },
-  { to: "/certificate", label: "Cert", icon: Award },
+  { to: "/profile", label: "Profile", icon: User },
 ];
 
 export function BottomNav() {
