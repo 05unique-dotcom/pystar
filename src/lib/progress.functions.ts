@@ -7,7 +7,7 @@ const lessonInput = z.object({ slug: z.string().trim().min(1).max(64) });
 
 const quizInput = z.object({
   slug: z.string().trim().min(1).max(64),
-  answers: z.array(z.number().int().min(0).max(20)).max(50),
+  answers: z.array(z.number().int().min(-1).max(20)).max(50),
 });
 
 /** Records a lesson as read. XP is recomputed server-side, never accepted from the client. */
