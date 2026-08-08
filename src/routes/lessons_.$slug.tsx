@@ -100,7 +100,7 @@ function LessonPage() {
       toast.success("Lesson complete! +20 XP");
     }
     if (correct / total >= 0.7 && !quizDone) {
-      passQuiz(lesson.slug);
+      passQuiz(lesson.slug, lesson.quiz.map((_, i) => answers[i] ?? -1));
       toast.success("Quiz passed! +30 XP");
     }
   };

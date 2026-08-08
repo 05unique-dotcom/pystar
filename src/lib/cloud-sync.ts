@@ -9,7 +9,7 @@ export type CloudProfile = {
   last_active: string | null;
 };
 
-/** Compute which badge ids are unlocked for a given progress snapshot. */
+/** Compute which badge ids are unlocked for a given progress snapshot (display only). */
 export function earnedBadgeIds(p: Pick<Progress, "completedLessons" | "passedQuizzes" | "streak" | "points">) {
   return BADGES.filter((b) => {
     if (b.type === "quiz") return p.passedQuizzes.length >= b.need;
@@ -37,41 +37,17 @@ export async function loadCloudProgress(userId: string) {
   };
 }
 
-/** Push the full snapshot for a user. Idempotent — safe to call after every change. */
-export async function pushCloudProgress(userId: string, p: Progress, scores: Record<string, number> = {}) {
-  const lessonIds = Array.from(new Set([...p.completedLessons, ...p.passedQuizzes]));
-
-  const rows = lessonIds.map((lesson_id) => ({
-    user_id: userId,
-    lesson_id,
-    completed: p.completedLessons.includes(lesson_id),
-    quiz_passed: p.passedQuizzes.includes(lesson_id),
-    score: scores[lesson_id] ?? null,
-    updated_at: new Date().toISOString(),
-  }));
-
-  const badgeRows = earnedBadgeIds(p).map((badge_id) => ({ user_id: userId, badge_id }));
-
-  await Promise.all([
-    rows.length
-      ? supabase.from("progress").upsert(rows, { onConflict: "user_id,lesson_id" })
-      : Promise.resolve(),
-    supabase.from("xp_points").upsert(
-      { user_id: userId, total: p.points, updated_at: new Date().toISOString() },
-      { onConflict: "user_id" },
-    ),
-    supabase
-      .from("profiles")
-      .update({
-        streak: p.streak,
-        last_active: p.lastVisit || null,
-        ...(p.name ? { display_name: p.name } : {}),
-      })
-      .eq("id", userId),
-    badgeRows.length
-      ? supabase.from("user_badges").upsert(badgeRows, { onConflict: "user_id,badge_id" })
-      : Promise.resolve(),
-  ]);
+/**
+ * Push only the user-editable profile fields. XP, lesson/quiz progress, badges and
+ * streak are written exclusively by server functions after server-side validation,
+ * so they are intentionally NOT sent from the browser.
+ */
+export async function pushCloudProfile(userId: string, p: Pick<Progress, "name" | "avatarUrl">) {
+  const patch: { display_name?: string; avatar_url?: string } = {};
+  if (p.name) patch.display_name = p.name;
+  if (p.avatarUrl) patch.avatar_url = p.avatarUrl;
+  if (!Object.keys(patch).length) return;
+  await supabase.from("profiles").update(patch).eq("id", userId);
 }
 
 export type LeaderboardRow = {
@@ -82,7 +58,7 @@ export type LeaderboardRow = {
   streak: number;
 };
 
-/** Public top-10 by XP. Readable without signing in. */
+/** Top-10 by XP. */
 export async function fetchLeaderboard(limit = 10): Promise<LeaderboardRow[]> {
   const { data: xp } = await supabase
     .from("xp_points")
@@ -111,4 +87,3 @@ export async function fetchLeaderboard(limit = 10): Promise<LeaderboardRow[]> {
     };
   });
 }
-

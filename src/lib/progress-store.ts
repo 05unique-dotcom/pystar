@@ -82,12 +82,33 @@ function write(p: Progress, { push = true } = {}) {
 
 async function pushToCloud() {
   if (!cloudUserId || syncing) return;
-  const { pushCloudProgress } = await import("@/lib/cloud-sync");
+  const { pushCloudProfile } = await import("@/lib/cloud-sync");
   try {
-    await pushCloudProgress(cloudUserId, cache);
+    await pushCloudProfile(cloudUserId, { name: cache.name, avatarUrl: cache.avatarUrl });
   } catch (err) {
-    console.error("Failed to save progress to the cloud", err);
+    console.error("Failed to save your profile to the cloud", err);
   }
+}
+
+/** Apply the server-computed snapshot (XP, streak, progress) as the source of truth. */
+function applyServerState(state: {
+  points: number;
+  completedLessons: string[];
+  passedQuizzes: string[];
+  streak: number;
+  lastVisit: string;
+}) {
+  write(
+    {
+      ...cache,
+      points: state.points,
+      completedLessons: state.completedLessons,
+      passedQuizzes: state.passedQuizzes,
+      streak: state.streak,
+      lastVisit: state.lastVisit || cache.lastVisit,
+    },
+    { push: false },
+  );
 }
 
 /**
@@ -146,6 +167,16 @@ export function useProgress() {
 
 export function completeLesson(slug: string) {
   ensureInit();
+  if (cloudUserId) {
+    void (async () => {
+      try {
+        const { recordLessonComplete } = await import("@/lib/progress.functions");
+        applyServerState(await recordLessonComplete({ data: { slug } }));
+      } catch (err) {
+        console.error("Failed to record lesson completion", err);
+      }
+    })();
+  }
   const p = { ...cache, completedLessons: [...cache.completedLessons] };
   if (!p.completedLessons.includes(slug)) {
     p.completedLessons.push(slug);
@@ -155,8 +186,18 @@ export function completeLesson(slug: string) {
   tickStreak();
 }
 
-export function passQuiz(slug: string) {
+export function passQuiz(slug: string, answers?: number[]) {
   ensureInit();
+  if (cloudUserId && answers) {
+    void (async () => {
+      try {
+        const { submitQuizAttempt } = await import("@/lib/progress.functions");
+        applyServerState(await submitQuizAttempt({ data: { slug, answers } }));
+      } catch (err) {
+        console.error("Failed to submit quiz", err);
+      }
+    })();
+  }
   const p = { ...cache, passedQuizzes: [...cache.passedQuizzes] };
   if (!p.passedQuizzes.includes(slug)) {
     p.passedQuizzes.push(slug);
