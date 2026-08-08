@@ -43,9 +43,9 @@ export async function loadCloudProgress(userId: string) {
  * so they are intentionally NOT sent from the browser.
  */
 export async function pushCloudProfile(userId: string, p: Pick<Progress, "name" | "avatarUrl">) {
-  const patch: Record<string, string> = {};
-  if (p.name) patch['display_name'] = p.name;
-  if (p.avatarUrl) patch['avatar_url'] = p.avatarUrl;
+  const patch: { display_name?: string; avatar_url?: string } = {};
+  if (p.name) patch.display_name = p.name;
+  if (p.avatarUrl) patch.avatar_url = p.avatarUrl;
   if (!Object.keys(patch).length) return;
   await supabase.from("profiles").update(patch).eq("id", userId);
 }
